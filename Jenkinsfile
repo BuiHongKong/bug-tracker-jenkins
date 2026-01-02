@@ -17,7 +17,7 @@ pipeline {
                 dir('bugtracker-backend') {
                     sh '''
                         go install github.com/jstemmer/go-junit-report/v2@latest
-                        go test ./... -v 2>&1 | go-junit-report -set-exit-code > test-results.xml
+                        go test ./... -v 2>&1 | go-junit-report > test-results.xml
                     '''
                 }
             post {
