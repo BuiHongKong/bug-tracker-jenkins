@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Unit test backend') {
             agent {
@@ -19,20 +19,32 @@ pipeline {
                 }
             }
         }
-        
-        stage('Build') {
+
+        stage('Unit test frontend') {
+            agent {
+                docker {
+                    image 'node:20-alpine'
+                    reuseNode true
+                }
+            }
             steps {
-                echo 'Building...'
+                echo 'Running unit tests for frontend...'
+                dir('bugtracker-frontend') {
+                    sh '''
+                        npm ci
+                        npm test
+                    '''
+                }
             }
         }
-        
-        stage('Test') {
+
+        stage('Deploy') {
             steps {
-                echo 'Testing...'
+                echo 'Deploying...'
             }
         }
     }
-    
+
     post {
         always {
             echo 'Pipeline completed!'
