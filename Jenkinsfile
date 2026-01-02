@@ -17,16 +17,17 @@ pipeline {
                 dir('bugtracker-backend') {
                     sh '''
                         go install github.com/jstemmer/go-junit-report/v2@latest
-                        go test ./... -v 2>&1 | go-junit-report > test-results.xml
+                        export PATH=$PATH:$(go env GOPATH)/bin
+                        go test ./... -v 2>&1 | go-junit-report -set-exit-code > test-results.xml
                     '''
                 }
+            }
             post {
                 always {
                     dir('bugtracker-backend') {
                         junit 'test-results.xml'
                     }
                 }
-            }
             }
         }
 
@@ -57,9 +58,9 @@ pipeline {
 
     post {
         always {
-           dir('bugtracker-frontend') {
-            junit 'test-results.xml'
-           }
+            dir('bugtracker-frontend') {
+                junit 'test-results.xml'
+            }
         }
     }
 }
