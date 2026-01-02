@@ -15,8 +15,18 @@ pipeline {
             steps {
                 echo 'Running unit tests for backend...'
                 dir('bugtracker-backend') {
-                    sh 'go test ./... -v'
+                    sh '''
+                        go install github.com/jstemmer/go-junit-report/v2@latest
+                        go test ./... -v 2>&1 | go-junit-report -set-exit-code > test-results.xml
+                    '''
                 }
+            post {
+                always {
+                    dir('bugtracker-backend') {
+                        junit 'test-results.xml'
+                    }
+                }
+            }
             }
         }
 
