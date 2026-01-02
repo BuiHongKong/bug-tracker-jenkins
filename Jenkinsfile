@@ -8,6 +8,9 @@ pipeline {
                     image 'golang:1.21'
                 }
             }
+            environment {
+                GOCACHE = '/tmp/go-build-cache'
+            }
             steps {
                 echo 'Running unit tests for backend...'
                 dir('bugtracker-backend') {
