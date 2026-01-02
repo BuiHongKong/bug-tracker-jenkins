@@ -47,7 +47,9 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline completed!'
+           dir('bugtracker-frontend') {
+            junit 'test-results.xml'
+           }
         }
     }
 }
