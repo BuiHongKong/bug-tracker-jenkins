@@ -27,12 +27,12 @@ pipeline {
                 always {
                     dir('bugtracker-backend') {
                         junit 'test-results.xml'
-                        publishHTML target: [  
-                            reportDir: 'coverage.html',
+                        publishHTML([
+                            reportDir: '.',
                             reportFiles: 'coverage.html',
-                            reportName: 'Backend Coverage Report'
-                            keepAll: true,
-                        ]
+                            reportName: 'Backend Coverage Report',
+                            keepAll: true
+                        ])
                     }
                 }
             }
