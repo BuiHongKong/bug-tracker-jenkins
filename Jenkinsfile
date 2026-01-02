@@ -32,7 +32,9 @@ pipeline {
                             reportDir: '.',
                             reportFiles: 'coverage.html',
                             reportName: 'Backend Coverage Report',
-                            keepAll: true
+                            keepAll: true,
+                            alwaysLinkToLastBuild: true,
+                            allowMissing: false
                         ])
                     }
                 }
