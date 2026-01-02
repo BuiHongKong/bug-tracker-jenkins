@@ -39,7 +39,7 @@ docker compose up --build
 
 The application will be available at:
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:8080
+- Backend API: http://localhost:8081
 
 ## Manual Setup
 
@@ -55,7 +55,7 @@ go mod download
 go run cmd/bugtracker/main.go
 ```
 
-The backend API will be available at http://localhost:8080
+The backend API will be available at http://localhost:8081
 
 ### Frontend
 
