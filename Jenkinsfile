@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'golang:1.21'
+        }
+    }
     
     stages {
         stage('Unit test backend') {
