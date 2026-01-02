@@ -19,6 +19,7 @@ pipeline {
                         go install github.com/jstemmer/go-junit-report/v2@latest
                         export PATH=$PATH:$(go env GOPATH)/bin
                         go test ./... -v 2>&1 | go-junit-report -set-exit-code > test-results.xml
+                        go tool cover -html=coverage.out -o coverage.html
                     '''
                 }
             }
@@ -26,6 +27,12 @@ pipeline {
                 always {
                     dir('bugtracker-backend') {
                         junit 'test-results.xml'
+                        publishHTML target: [  
+                            reportDir: 'coverage.html',
+                            reportFiles: 'coverage.html',
+                            reportName: 'Backend Coverage Report'
+                            keepAll: true,
+                        ]
                     }
                 }
             }
