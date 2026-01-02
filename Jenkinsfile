@@ -6,6 +6,7 @@ pipeline {
             agent {
                 docker {
                     image 'golang:1.21'
+                    reuseNode true
                 }
             }
             environment {
