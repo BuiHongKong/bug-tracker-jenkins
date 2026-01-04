@@ -81,7 +81,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+                stage('Deploy') {
             agent {
                 docker {
                     image 'docker:latest'
@@ -94,6 +94,7 @@ pipeline {
                 sh "docker compose up --build -d"
             }
         }
+    }
 
     post {
         always {
