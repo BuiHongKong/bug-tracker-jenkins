@@ -82,9 +82,22 @@ pipeline {
         }
 
         stage('Deploy') {
+            agent {
+                docker {
+                    image 'docker:latest'
+                    reuseNode true
+                    args '-v /var/run/docker.sock:/var/run/docker.sock -u 0'
+                }
+            }
             steps {
                 echo 'Deploying...'
+                sh "docker compose up --build -d"
             }
+        }
+
+    post {
+        always {
+            cleanWs()
         }
     }
 
