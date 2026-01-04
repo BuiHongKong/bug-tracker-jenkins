@@ -127,9 +127,7 @@ pipeline {
                             reportDir: '.',
                             reportFiles: 'playwright-report/index.html',
                             reportName: 'API Test Report',
-                            keepAll: true,
-                            alwaysLinkToLastBuild: true,
-                            allowMissing: false
+                            
                         ])
                     }
                 }
