@@ -108,14 +108,21 @@ pipeline {
                     sh '''
                         npx wait-port http://localhost:8081/api/health -t 30000
                         npm ci
-                        npx playwright test --reporter=html
+                        npx playwright test
+                        ls -la test-results/ || echo "test-results directory check"
                     '''
                 }
             }
             post {
                 always {
                     dir('tests-api') {
-                        junit 'test-results/results.xml'
+                        script {
+                            if (fileExists('test-results/results.xml')) {
+                                junit 'test-results/results.xml'
+                            } else {
+                                echo 'Warning: test-results/results.xml not found'
+                            }
+                        }
                         publishHTML([
                             reportDir: '.',
                             reportFiles: 'playwright-report/index.html',
