@@ -108,7 +108,7 @@ pipeline {
                     sh '''
                         npx wait-port http://localhost:8081/api/health -t 30000
                         npm ci
-                        npx playwright test
+                        npx playwright test --reporter=html
                     '''
                 }
             }
@@ -117,8 +117,8 @@ pipeline {
                     dir('tests-api') {
                         junit 'test-results/results.xml'
                         publishHTML([
-                            reportDir: 'playwright-report',
-                            reportFiles: 'index.html',
+                            reportDir: '.',
+                            reportFiles: 'playwright-report/index.html',
                             reportName: 'API Test Report',
                             keepAll: true,
                             alwaysLinkToLastBuild: true,
