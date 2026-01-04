@@ -123,14 +123,7 @@ pipeline {
                                 echo 'Warning: test-results/results.xml not found'
                             }
                         }
-                        publishHTML([
-                            reportDir: '.',
-                            reportFiles: 'playwright-report/index.html',
-                            reportName: 'API Test Report',
-                            keepAll: true,
-                            alwaysLinkToLastBuild: true,
-                            allowMissing: false
-                        ])
+                        archiveArtifacts artifacts: 'playwright-report/**', fingerprint: true, allowEmptyArchive: true
                     }
                 }
             }
