@@ -98,7 +98,7 @@ pipeline {
         stage('API Tests') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright/playwright:v1.50.0-jammy'
+                    image 'mcr.microsoft.com/playwright:v1.50.0-jammy'
                     reuseNode true
                     args '-u 0 --network=host'
                 }
