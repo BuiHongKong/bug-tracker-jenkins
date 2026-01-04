@@ -128,6 +128,40 @@ pipeline {
                 }
             }
         }
+
+        stage('E2E Tests') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.50.0-jammy'
+                    reuseNode true
+                    args '-u 0 --network=host'
+                }
+            }
+            steps {
+                dir('tests-e2e') {
+                    sh '''
+                        npx wait-port http://localhost:3000 -t 30000
+                        npm ci
+                        npx playwright test
+                        ls -la test-results/ || echo "test-results directory check"
+                    '''
+                }
+            }
+            post {
+                always {
+                    dir('tests-e2e') {
+                        script {
+                            if (fileExists('test-results/results.xml')) {
+                                junit 'test-results/results.xml'
+                            } else {
+                                echo 'Warning: test-results/results.xml not found'
+                            }
+                        }
+                        archiveArtifacts artifacts: 'playwright-report-e2e/**', fingerprint: true, allowEmptyArchive: true
+                    }
+                }
+            }
+        }
     }
 
     post {
