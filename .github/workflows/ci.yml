@@ -52,4 +52,4 @@ jobs:
         with:
           name: Frontend unit tests report
           path: bugtracker-frontend/test-results.xml
-          reporter: junit
+          reporter: java-junit
