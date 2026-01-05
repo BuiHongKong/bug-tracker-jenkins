@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4     
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.21
+          cache-dependency-path: bugtracker-backend/go.sum
+      - name: run unit tests backend
+        working-directory: bugtracker-backend
+        run: |
+          go test ./... -v 
+          
+      
+
