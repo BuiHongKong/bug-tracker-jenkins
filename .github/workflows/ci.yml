@@ -37,7 +37,9 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: '20'
-          
+          cache: 'npm'
+          cache-dependency-path: bugtracker-frontend/package-lock.json
+
       - name: run unit tests frontend
         working-directory: bugtracker-frontend
         run: |
